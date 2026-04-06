@@ -1,23 +1,29 @@
 class Solution {
 public:
-    vector<int> twoSum(vector<int>& nums, int target)
-    {
-        map <int , int> hashmap;
-       for(int i = 0; i < nums.size(); i++)
-       {
-        int t  = target - nums[i] ;
-        if(hashmap.find(t) == hashmap.end())
-        {
-            hashmap[nums[i]] = i;
-        }
-          else if(hashmap.find(t) != hashmap.end())
-            {
-                vector <int> A;
-                A.push_back(i);
-                A.push_back(hashmap[t]);
-                return A;
+    vector<int> twoSum(vector<int>& nums, int target) {
+        map<int, int> mpp;
+        int index1 = -1;
+        int index2 = -1;
+        for (int j = 0; j < nums.size(); j++) {
+            mpp[nums[j]]++;
+            if (target - nums[j] == nums[j]) {
+                if (mpp[target - nums[j]] > 1) {
+                    index1 = j;
+                    break;
+                }
+            } else {
+                if (mpp[target - nums[j]] > 0) {
+                    index1 = j;
+                    break;
+                }
             }
-       } 
-       return {};   
+        }
+        for (int i = 0; i < index1; i++) {
+            if (nums[i] == target - nums[index1]) {
+                index2 = i;
+                break;
+            }
+        }
+        return {index2, index1};
     }
 };

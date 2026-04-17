@@ -1,32 +1,16 @@
 class Solution {
 public:
-    bool isPalindrome(int x) {
-        int dup = x;
-          long rev = 0;
-        bool xsign = (x >= 0);
-        if (xsign == true)
-        {
-            while (x > 0)
-            {
-            int l = x%10;
-            rev = rev*10 + l;
-            x = x/10;
+    bool isPalindrome(long long x) {
+        long long temp = x;
+        if(x < 0) {return false;}
+        else{
+            long long rev = 0;
+            while(x > 0){
+                rev = rev*10 + x%10;
+                x = x/10;
             }
+            if(rev == temp) return true;
         }
-         
-       else if (xsign == false)
-        {
-            return false;
-        }
-        if (dup == rev)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-        
-        
+        return false;
     }
 };

@@ -1,29 +1,21 @@
 class Solution {
 public:
-    int myAtoi(string s) {
-        int n = s.length();
-        int i = 0;
-        while(i < n && s[i] == ' '){
-            i++;
-        }
-        if(i == n){
-            return 0;
-        }
-        int sign = 1;
-        if(s[i] == '-'){
-            sign = -1;
-            i++;
-        }
-        else if(s[i] =='+') i++;
 
-        long long res = 0;
-        while(i < n && isdigit(s[i])){
-            int digit = s[i] - '0';
-            res = res*10 + digit;
-            if(sign*res < INT_MIN) return INT_MIN;
-            if(sign*res > INT_MAX)return INT_MAX;
-            i++;
-        }
-        return static_cast<int>(res * sign);
+int helper(string s, int i, long long num, int sign){
+    if(i >= s.length() || !isdigit(s[i])) return (int)num*sign;
+    int digit = s[i] - '0';
+    num = num*10 + digit;
+    if(sign*num >= INT_MAX) return INT_MAX;
+    else if(sign*num <= INT_MIN) return INT_MIN;
+    return helper(s, i+1, num, sign);
+}
+
+    int myAtoi(string s) {
+        int i = 0;
+        while(s[i] == ' ') i++;
+        int sign = 1;
+        if(s[i] == '-') {sign = -1; i++;}
+        else if(s[i] == '+') i++;
+        return helper(s, i, 0, sign);
     }
 };

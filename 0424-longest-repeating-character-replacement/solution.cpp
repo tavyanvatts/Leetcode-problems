@@ -1,23 +1,24 @@
 class Solution {
 public:
     int characterReplacement(string s, int k) {
-        unordered_map<char,int>mpp;
-        int maxi = 0,ans=0;
-        int j=0;
-        for(int i=0; i<s.size(); i++){
-            mpp[s[i]]++;
-            if(mpp[s[i]] > maxi){
-                maxi = mpp[s[i]];
+        int l = 0;
+        int r = 0;
+        unordered_map<char, int> hash;
+        int maj = INT_MIN;
+        int maxi = INT_MIN;
+        int n = s.length();
+        while(r < n){
+            hash[s[r]]++;
+            if(hash[s[r]] > maj){
+                maj = hash[s[r]];
             }
-            int min = i-j+1 - maxi;
-            while(min > k){
-                mpp[s[j]]--;
-                j++;
-                maxi = max(maxi,mpp[s[j]]);
-                min = i-j+1 - maxi;
+            if(r - l + 1 - maj > k){
+                hash[s[l]]--;
+                l++;
             }
-            ans = max(ans,i-j+1);
+            maxi = max(r - l + 1, maxi);
+            r++;
         }
-        return ans;
+        return maxi;
     }
 };

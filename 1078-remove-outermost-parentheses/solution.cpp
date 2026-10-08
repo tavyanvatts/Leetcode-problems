@@ -15,7 +15,6 @@ public:
                 s.erase(end, 1);
                 start = -1;
                 end = -1;
-                cnt = 0;
                 i-= 2;
             }
         }

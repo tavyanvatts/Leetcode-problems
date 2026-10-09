@@ -1,24 +1,26 @@
 class Solution {
 public:
-string function(int n){
-    string ans = "";
-    char ch = 'a';
-    while(n > 0){
-        if(ch == 'z'){
-            ans.append(n,'z');
-            break;
+    string function(int n) {
+        int cnt = 0;
+        string addi = "";
+        while (n != 1) {
+            if (n % 2 == 0) {
+                cnt += 1;
+                n /= 2;
+            } else if (n % 2 == 1) {
+                addi += 'a' + cnt;
+                n--;
+            }
         }
-        if((n&1) == 1){
-            ans += ch;
-        }
-        ch++;
-        n = n/2;
+        char h = 'a' + cnt;
+        if(h == '{') addi += "zz";
+        else addi += h;
+        reverse(addi.begin(), addi.end());
+        return addi;
     }
-    return string(ans.rbegin(), ans.rend());
-}
     vector<string> largestString(vector<int>& nums) {
         vector<string> ans;
-        for(int i = 0; i < nums.size(); i++){
+        for (int i = 0; i < nums.size(); i++) {
             ans.push_back(function(nums[i]));
         }
         return ans;

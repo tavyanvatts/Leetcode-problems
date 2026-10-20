@@ -2,22 +2,9 @@ class Solution {
 public:
     int findMin(vector<int>& nums) {
         int n = nums.size();
-        int high = n - 1;
-        int low = 0;
-        int mini = INT_MAX;
-        while(low <= high)
-        {
-            int mid = (low + high)/2;
-            if(nums[mid] <= nums[high]) 
-            {
-                mini = min(mini ,nums[mid]);
-                high = mid - 1;
-            }
-            else{
-                mini = min(mini , nums[low]);
-                low = mid + 1;
-                }
+        for(int i = 0; i < n -1; i++){
+            if(nums[i] > nums[i + 1]) return nums[i + 1];
         }
-        return mini;
+        return nums[0];
     }
 };

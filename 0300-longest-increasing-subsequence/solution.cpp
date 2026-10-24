@@ -1,19 +1,18 @@
 class Solution {
 public:
-
-int function(vector<int>& nums, int ind, int prev, vector<vector<int>> &dp){
-    if(ind == nums.size()) return 0;
-    if(dp[ind][prev + 1] != -1) return dp[ind][prev + 1];
-    int length = 0;
-    if(prev == -1 || nums[prev] < nums[ind]){
-        int l1 = 1 + function(nums, ind + 1, ind, dp);
-        length = max(length, l1);
-    }
-    length = max(length, function(nums, ind + 1, prev, dp));
-    return dp[ind][prev + 1] = length;
-}
     int lengthOfLIS(vector<int>& nums) {
-        vector<vector<int>> dp(nums.size() + 1, vector<int>(nums.size() + 2, -1));
-        return function(nums, 0, -1, dp);
+        int n = nums.size();
+        vector<int> ans;
+        int len = 0;
+        for(int i = 0; i < n; i++){
+            if(ans.empty() || nums[i] > ans.back()){
+                ans.push_back(nums[i]);
+                len++;
+            }
+            else if(nums[i] < ans.back()){
+                ans[lower_bound(ans.begin(), ans.end(), nums[i]) - ans.begin()] = nums[i];
+            }
+        }
+        return len;
     }
 };

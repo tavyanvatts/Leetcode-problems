@@ -1,30 +1,25 @@
 class Solution {
 public:
-    string longestPalindrome(string s) {
-        int n = s.length();
-        int maxlen = 1;
-        int start = 0;
-        int end = 0;
-        for(int i = 0; i < n; i++){
-            int oddlen = expander(s, i - 1, i + 1);
-            int evenlen = expander(s, i, i+1);
-            maxlen = max(oddlen, evenlen);
-            
-            if(maxlen > end - start)
-            {start = i - maxlen/2;
-            if(evenlen > oddlen) start = i - maxlen/2 + 1;
-            end = i + maxlen/2;}
-        }
-        return s.substr(start, end - start + 1);
+
+string lengthcalc(int l, int r, string &s){
+    while((l >= 0 && r < s.size()) && s[l] == s[r]){
+        l--;
+        r++;
     }
-    int expander(string s, int l, int r){
-        int n = s.length();
-        if(l < 0 || r > n - 1) return r - l - 1;
-        while(s[l] == s[r]){
-            l--;
-            r++;
-            if(l < 0 || r > n - 1) return r - l - 1;
+    l++;
+    r--;
+    return s.substr(l, r - l + 1);
+}
+    string longestPalindrome(string s) {
+        string ans;
+        for(int i = 0; i < s.size(); i++){
+            string o = lengthcalc(i, i, s);
+            string e = lengthcalc(i, i + 1, s);
+            if(ans.size() < max(o.size(), e.size())){
+                if(o.size() > e.size()) ans = o;
+                else ans = e;
+            }
         }
-        return r - l - 1;
+        return ans;
     }
 };

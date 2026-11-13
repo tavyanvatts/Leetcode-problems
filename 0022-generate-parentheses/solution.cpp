@@ -1,23 +1,21 @@
 class Solution {
 public:
 
-void generatevalidstrings(vector<string> &ans,string s,int o,int c,int n){
-    if(o - c < 0) return;
-    if(o > n || c > n) return;
-    if(o + c == 2*n){
-        ans.push_back(s);
+void function(vector<string> &ans, int n, int sum, string s){
+    if(sum < 0) return;
+    if(n == 0){
+        if(sum == 0){ans.push_back(s);}
         return;
     }
-        generatevalidstrings(ans, s + '(', o + 1, c, n);
-        
-        generatevalidstrings(ans, s + ')', o, c + 1, n);
+    if(n > 0){
+        function(ans, n - 1, sum + 1, s + '(');
+    }
+    function(ans, n - 1, sum - 1, s + ')');
 }
     vector<string> generateParenthesis(int n) {
         vector<string> ans;
-        string s = "(";
-        int o = 1;
-        int c = 0;
-        generatevalidstrings(ans, s, o, c, n);
+        string s;
+        function(ans, 2*n, 0, s);
         return ans;
     }
 };
